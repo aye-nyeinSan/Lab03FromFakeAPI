@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import PassengerListView from './views/PassengerListView.vue';
+  import { RouterView } from 'vue-router';
 </script>
 
 <template>
 
  
-  <RouterView/>
+<RouterView></RouterView>
 </template>
 
 <style scoped>

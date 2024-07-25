@@ -11,14 +11,16 @@ const apiClient = axios.create({
 });
 
 export default {
-    getPassengers(perPage:Number,page:Number){
-        return apiClient.get<Passenger[]>(`/passenger?page=${perPage}&size=${page}`)
+    getPassengers(perPage: number,page: number){
+        //3 items perPage ondefaults
+        return apiClient.get<Passenger[]>(`/passenger?page=${page}&size=${perPage}`)
     },
-    getPassenger(id:String){
+    getPassengerByID(id:string){
+       
+        const response = apiClient.get<Passenger>(`/passenger/${id}`);
+        console.log("response from Services", response);
         return apiClient.get<Passenger>(`/passenger/${id}`)
     },
-    getNewPassengers(){
-        return apiClient.get("/passenger?page=0&size=10");
-    }
+   
   
 }
