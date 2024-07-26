@@ -1,5 +1,5 @@
-import axios, { AxiosResponse } from 'axios';
-import {type Passenger} from '../types/Passenger';
+import axios from 'axios';
+import {type Passenger} from '@/types';
 
 const apiClient = axios.create({
   baseURL: "https://api.instantwebtools.net/v1",

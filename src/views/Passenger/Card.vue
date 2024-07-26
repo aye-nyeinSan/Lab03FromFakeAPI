@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { defineProps } from "vue";
-import { type Passenger } from "../types/Passenger";
+import { type Passenger } from "@/types";
 import { RouterLink } from "vue-router";
 
 defineProps<{

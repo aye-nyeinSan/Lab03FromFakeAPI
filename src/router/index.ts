@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
-import PassengerListView from "../views/Passenger/ListView.vue";
-import PassengerDetailView from "../views/Passenger/DetailView.vue";
-import NotFound from "../views/NotFound.vue";
-import LayoutView from "../views/Passenger/LayoutView.vue";
-import NetworkErrorView from "../views/NetworkErrorView.vue";
+import PassengerListView from "@/views/Passenger/ListView.vue";
+import PassengerDetailView from "@/views/Passenger/DetailView.vue";
+import NotFound from "@/views/NotFound.vue";
+import LayoutView from "@/views/Passenger/LayoutView.vue";
+import NetworkErrorView from "@/views/NetworkErrorView.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -13,13 +13,14 @@ const router = createRouter({
       name: "passenger-list-view",
       component: PassengerListView,
       props: (route) => ({
-        page: parseInt(route.query.page?.toString() || "1"),
-      }),
-    },
+        page:  parseInt(route.query.page?.toString() || "1")
+
+    })},
     {
       path: "/passenger/:id",
       name: "passenger-layout-view",
       component: LayoutView,
+      
       props: true,
       children: [
         {
@@ -40,11 +41,13 @@ const router = createRouter({
       path: "/network-error",
       name: "network-error-view",
       component: NetworkErrorView,
+      props: true
     },
     {
       path: "/:catchAll(.*)",
       name: "not-found",
       component: NotFound,
+      props: true
     },
   ],
 });

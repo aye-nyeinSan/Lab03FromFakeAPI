@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watchEffect, defineProps } from "vue";
-import Passengerservices from "../../serivces/Passengerservices";
-import Passenger from "@/types/Passenger";
+import Passengerservices from "@/serivces/Passengerservices";
+import {type Passenger} from "@/types";
 import PassengerCard from "./Card.vue";
-
+import { useRouter } from "vue-router";
+const router = useRouter();
 const props = defineProps({
   page: {
     type: Number,
@@ -22,14 +23,26 @@ const hasNextPage = computed(() => {
 
 const fetchPassengers = async () => {
   try {
-    const passengerList = await Passengerservices.getPassengers(3, page.value);
+     const passengerList = await Passengerservices.getPassengers(3, page.value);
     console.log("Passenger List:", passengerList, "Page:", page.value);
     passengers.value = passengerList.data.data;
     totalPassengers.value = passengerList.data.totalPassengers;
-  } catch (error) {
-    console.error("Error fetching passengers:", error);
   }
-};
+    catch (error) {
+    if ((error as any).response && (error as any).response.status === 404) {
+      router.push({
+        name: "404-resource-view",
+        params: { resource: "passenger" },
+      });
+    } else {
+      router.push({
+        name: "network-error-view",
+      });
+    }
+  }
+  }
+   
+
 
 onMounted(() => {
   // Initial fetch
@@ -50,6 +63,7 @@ onMounted(() => {
       v-for="passenger in passengers"
       :key="passenger._id"
       :passenger="passenger"
+      :page="page"
     />
   </div>
   <div class="pagination">
