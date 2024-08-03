@@ -13,7 +13,6 @@
 
   const { passenger } = toRefs(props);
   const update = () => {
-    console.log('Update');
     store.setMessage('Passenger Updated: ' + props.passenger.name);
     setTimeout(() => {
       store.setMessage('');

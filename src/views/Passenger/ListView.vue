@@ -4,6 +4,7 @@ import Passengerservices from "@/serivces/Passengerservices";
 import {type Passenger} from "@/types";
 import PassengerCard from "./Card.vue";
 import { useRouter } from "vue-router";
+import nProgress from "nprogress";
 const router = useRouter();
 const props = defineProps({
   page: {
@@ -17,47 +18,50 @@ const totalPassengers = ref(0);
 const page = ref<number>(props.page);
 
 const hasNextPage = computed(() => {
-  const totalPages = Math.ceil(totalPassengers.value / 3);
+  const totalPages = Math.ceil(totalPassengers.value / 10);
   return page.value < totalPages;
 });
 
 const fetchPassengers = async () => {
   try {
-     const passengerList = await Passengerservices.getPassengers(3, page.value);
+     const passengerList = await Passengerservices.getPassengers(10, page.value);
     console.log("Passenger List:", passengerList, "Page:", page.value);
     passengers.value = passengerList.data.data;
     totalPassengers.value = passengerList.data.totalPassengers;
   }
     catch (error) {
-    if ((error as any).response && (error as any).response.status === 404) {
-      router.push({
-        name: "404-resource-view",
-        params: { resource: "passenger" },
-      });
-    } else {
-      router.push({
-        name: "network-error-view",
-      });
-    }
-  }
+  //   if ((error as any).response && (error as any).response.status === 404) {
+  //     router.push({
+  //       name: "404-resource-view",
+  //       params: { resource: "passenger" },
+  //     });
+  //   } else {
+  //     router.push({
+  //       name: "network-error-view",
+  //     });
+  //   }
+  // }
+  console.log("Error:", error);
+}
+  
   }
    
 
 
 onMounted(() => {
-  // Initial fetch
-  fetchPassengers();
   
+  // Initial fetch
+ 
   watchEffect(() => {
     page.value = props.page;
-    console.log("Props Page Updated:", props.page);
+    //console.log("Props Page Updated:", props.page);
     fetchPassengers();
   });
 });
 </script>
 
 <template>
-  <div>
+  <div class="events">
     <h1>Passenger List</h1>
     <PassengerCard
       v-for="passenger in passengers"
@@ -65,7 +69,7 @@ onMounted(() => {
       :passenger="passenger"
       :page="page"
     />
-  </div>
+  
   <div class="pagination">
     <RouterLink
       id="page-prev"
@@ -83,6 +87,7 @@ onMounted(() => {
     >
       Next Page &#62;
     </RouterLink>
+  </div>
   </div>
 </template>
 

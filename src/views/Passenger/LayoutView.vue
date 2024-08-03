@@ -25,17 +25,20 @@ onMounted(async () => {
     console.log("Passenger:", passenger.value);
 
   } catch (error) {
-    if ((error as any).response && (error as any).response.status === 404) {
-      router.push({
-        name: "404-resource-view",
-        params: { resource: "passenger" },
-      });
-    } else {
-      router.push({
-        name: "network-error-view",
-      });
-    }
-  }
+  //   if ((error as any).response && (error as any).response.status === 404) {
+  //     router.push({
+  //       name: "404-resource-view",
+  //       params: { resource: "passenger" },
+  //     });
+  //   } else {
+  //     router.push({
+  //       name: "network-error-view",
+  //     });
+  //   }
+  // }
+  console.error(error);
+}
+  
 });
 
 </script>
