@@ -15,3 +15,7 @@ export interface Passenger {
   trips: number;
   airline: Airline[];
 }
+
+export interface MessageState{
+  message: string;
+}
